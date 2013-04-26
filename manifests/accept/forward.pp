@@ -1,0 +1,61 @@
+#
+# == Class: packetfilter::accept::forward
+#
+# Allow forwarding of packets from source IP to destination IP
+#
+# == Params
+#
+# [*source*]
+#   Source IP for the packets
+# [*destination*]
+#   Destination IP for the packets
+# [*proto*]
+#   Protocol (e.g. tcp or udp). Defaults to '' (any protocol)
+# [*dport*]
+#   Destination port. Defaults to '' (any port)
+#
+# == Examples
+#
+# class { 'packetfilter::accept::forward':
+#   source => '192.168.40.8',
+#   destination => '10.10.122.95',
+#   proto => 'udp',
+#   dport => 1194,
+# }
+#
+# == Authors
+#
+# Samuli Seppänen <samuli.seppanen@gmail.com>
+#
+define packetfilter::accept::forward(
+    $source,
+    $destination,
+    $proto='',
+    $dport=''
+)
+{
+    # No port/protocol information -> accept based on IP/IP-range
+    if ( $proto == '' ) or ( $dport == '' ) {
+        firewall { "001 ipv4 accept forward from ${source} to ${destination}":
+            provider => 'iptables',
+            chain  => 'FORWARD',
+            proto => 'all',
+            action => 'accept',
+            source => "$source",
+            destination => "$destination",
+        }
+    }
+    else
+    {
+        # Port and protocol given, use more granular filters
+        firewall { "001 ipv4 accept forward ${proto} from ${source} to ${destination}:${dport}":
+            provider => 'iptables',
+            chain  => 'FORWARD',
+            action => 'accept',
+            source => "$source",
+            destination => "$destination",
+            dport => "$dport",
+            proto => "$proto",
+        }
+    }
+}

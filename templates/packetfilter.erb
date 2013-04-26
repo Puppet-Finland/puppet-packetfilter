@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Restore iptables rules on boot
+
+RESTOREV4="/sbin/iptables-restore"
+RESTOREV6="/sbin/ip6tables-restore"
+
+if [ "$1" = "" ]; then
+	ARG="start"
+else
+	ARG=$1
+fi
+
+if [ "$ARG" = "start" ]; then
+
+# This is where we've told puppet to store the firewall rules
+<% if operatingsystem == "Debian" or operatingsystem == "Ubuntu" %>
+IPTABLES_SAVE="/etc/iptables.save"
+IP6TABLES_SAVE="/etc/ip6tables.save"
+<% else %>
+IPTABLES_SAVE="/etc/sysconfig/iptables"
+IP6TABLES_SAVE="/etc/sysconfig/iptables"
+<% end %>
+
+# Restore firewall rules
+$RESTOREV4 $IPTABLES_SAVE
+$RESTOREV6 $IP6TABLES_SAVE
+
+fi
