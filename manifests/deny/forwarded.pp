@@ -14,14 +14,11 @@
 #
 class packetfilter::deny::forwarded($stage='packetfilter-post') {
 
-    include packetfilter::save
-
     firewall { '999 ipv4 deny all other requests':
         provider => 'iptables',
         chain  => 'FORWARD',
         proto => 'all',
         action => 'drop',
-        notify => Class['packetfilter::save'],
     }
 
     firewall { '999 ipv6 deny all other requests':
@@ -29,6 +26,5 @@ class packetfilter::deny::forwarded($stage='packetfilter-post') {
         chain  => 'FORWARD',
         proto => 'all',
         action => 'drop',
-        notify => Class['packetfilter::save'],
     }
 }

@@ -9,7 +9,8 @@
 # Samuli Seppänen <samuli.seppanen@gmail.com>
 #
 class packetfilter::endpoint {
-    include packetfilter::config
+
+    include packetfilter
     include packetfilter::accept::inbound
     include packetfilter::deny::inbound
     include packetfilter::deny::forwarded
