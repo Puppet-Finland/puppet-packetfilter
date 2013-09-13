@@ -12,6 +12,9 @@
 # 
 class packetfilter {
 
+# Rationale for this is explained in init.pp of the sshd module
+if hiera('manage_packetfilter') != 'false' {
+
     # Define packetfilter stages: The initial rules are set in pre-stage,
     # before all normal rules. Rules belonging to the end are set in post-stage.
     stage {'packetfilter-pre':  before  => Stage['main'] }
@@ -22,4 +25,5 @@ class packetfilter {
 
     # Remove obsolete configurations
     include packetfilter::absent
+}
 }
