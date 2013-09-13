@@ -13,7 +13,7 @@
 class packetfilter {
 
 # Rationale for this is explained in init.pp of the sshd module
-if hiera('manage_packetfilter') != 'false' {
+if hiera('manage_packetfilter', 'true') != 'false' {
 
     # Define packetfilter stages: The initial rules are set in pre-stage,
     # before all normal rules. Rules belonging to the end are set in post-stage.
