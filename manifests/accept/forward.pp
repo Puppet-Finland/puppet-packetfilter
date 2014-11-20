@@ -16,12 +16,12 @@
 #
 # == Examples
 #
-# class { 'packetfilter::accept::forward':
-#   source => '192.168.40.8',
-#   destination => '10.10.122.95',
-#   proto => 'udp',
-#   dport => 1194,
-# }
+#   class { 'packetfilter::accept::forward':
+#       source => '192.168.40.8',
+#       destination => '10.10.122.95',
+#       proto => 'udp',
+#       dport => 1194,
+#   }
 #
 # == Authors
 #

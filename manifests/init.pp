@@ -7,7 +7,9 @@
 # == Authors
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
+#
 # Samuli Seppänen <samuli@openvpn.net>
+#
 # Mikko Vilpponen <vilpponen@protecomp.fi>
 # 
 class packetfilter {

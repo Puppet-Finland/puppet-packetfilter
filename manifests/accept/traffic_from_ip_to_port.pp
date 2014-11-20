@@ -18,13 +18,13 @@
 #
 # == Examples
 #
-# packetfilter::accept::traffic_to_ip { 'allow web access from management node':
-#   iface => 'eth0',
-#   ipv4_address => '192.168.30.30',
-#   ipv6_address => '::1',
-#   proto => 'tcp',
-#   dport => '443',
-# }
+#   packetfilter::accept::traffic_to_ip { 'allow web access from management node':
+#       iface => 'eth0',
+#       ipv4_address => '192.168.30.30',
+#       ipv6_address => '::1',
+#       proto => 'tcp',
+#       dport => '443',
+#   }
 #
 # == Authors
 #

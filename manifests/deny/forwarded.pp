@@ -10,6 +10,7 @@
 # == Authors
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
+#
 # Samuli Seppänen <samuli@openvpn.net>
 #
 class packetfilter::deny::forwarded($stage='packetfilter-post') {

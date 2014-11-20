@@ -13,11 +13,11 @@
 #
 # == Examples
 #
-# packetfilter::accept::traffic_to_ip { 'allow access from management node':
-#   iface => 'eth0',
-#   ipv4_address => '192.168.30.30',
-#   ipv6_address => '::1',
-# }
+#   packetfilter::accept::traffic_to_ip { 'allow access from management node':
+#       iface => 'eth0',
+#       ipv4_address => '192.168.30.30',
+#       ipv6_address => '::1',
+#   }
 #
 # == Authors
 #
