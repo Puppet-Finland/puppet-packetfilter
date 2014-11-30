@@ -12,6 +12,10 @@
 #
 # Mikko Vilpponen <vilpponen@protecomp.fi>
 # 
+# == License
+#
+# BSD-license. See file LICENSE for details.
+#
 class packetfilter {
 
 # Rationale for this is explained in init.pp of the sshd module

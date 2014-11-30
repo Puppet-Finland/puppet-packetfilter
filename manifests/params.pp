@@ -8,5 +8,16 @@
 # Samuli Seppänen <samuli.seppanen@gmail.com>
 #
 class packetfilter::params {
-    # Not required at this point
+
+    case $::osfamily {
+        'RedHat': {
+            $required_packages = ['iptables-ipv6']
+        }
+        'Debian': {
+            $required_packages = ['iptables-persistent']
+        }
+        default: {
+            fail("Unsupported OS: ${::osfamily}")
+        }
+    }
 }
