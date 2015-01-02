@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "author": "Puppet-Finland team",
   "license": "BSD license",
-  "summary": "Setup packetfilter"
+  "summary": "Setup packetfilter",
   "source": "https://github.com/Puppet-Finland/packetfilter.git",
   "project_page": "https://github.com/Puppet-Finland/packetfilter",
   "dependencies": [ ]
