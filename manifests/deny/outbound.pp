@@ -13,7 +13,8 @@
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
 #
-define packetfilter::deny::outbound(
+define packetfilter::deny::outbound
+(
     $iface,
     $stage='packetfilter-post'
 )

@@ -14,7 +14,8 @@
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
 #
-define packetfilter::deny::forward(
+define packetfilter::deny::forward
+(
     $source,
     $destination
 )
@@ -26,7 +27,7 @@ define packetfilter::deny::forward(
         chain  => 'FORWARD',
         proto => 'all',
         action => 'drop',
-        source => "$source",
-        destination => "$destination",
+        source => $source,
+        destination => $destination,
     }
 }

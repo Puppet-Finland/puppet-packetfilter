@@ -2,7 +2,9 @@
 # == Class: packetfilter::endpoint
 # 
 # Typical set of rules for endpoint nodes. Allows only limited inbound traffic 
-# without placing restrictions on outbound traffic.
+# without placing restrictions on outbound traffic. This class can also be used 
+# on routing VPN servers provided that appropriate ACCEPT rules are added to the 
+# FORWARD chain.
 #
 # == Authors
 #
