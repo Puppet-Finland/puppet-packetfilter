@@ -1,5 +1,5 @@
 #
-# == Class: packetfilter::accept::forward
+# == Define: packetfilter::accept::forward
 #
 # Allow forwarding of packets from source IP to destination IP
 #
@@ -27,7 +27,8 @@
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
 #
-define packetfilter::accept::forward(
+define packetfilter::accept::forward
+(
     $source,
     $destination,
     $proto='',
