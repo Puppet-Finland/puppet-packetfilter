@@ -29,37 +29,39 @@ define packetfilter::accept::traffic_to_ip(
     $ipv6_address
 )
 {
-	firewall { "007 ipv4 accept outbound to $ipv4_address":
-		provider => 'iptables',
-		chain => 'OUTPUT',
-		proto => 'all',
-		action => 'accept',
-		destination => "$ipv4_address",
-		outiface => "$iface",
-	}	
-	firewall { "007 ipv4 accept inbound from $ipv4_address":
-		provider => 'iptables',
-		chain => 'INPUT',
-		proto => 'all',
-		action => 'accept',
-		source => "$ipv4_address",
-		iniface => "$iface",
+    firewall { "007 ipv4 accept outbound to ${ipv4_address}":
+        provider    => 'iptables',
+        chain       => 'OUTPUT',
+        proto       => 'all',
+        action      => 'accept',
+        destination => $ipv4_address,
+        outiface    => $iface,
     }
 
-	firewall { "007 ipv6 accept outbound to $ipv6_address":
-		provider => 'ip6tables',
-		chain => 'OUTPUT',
-		proto => 'all',
-		action => 'accept',
-		destination => "$ipv6_address",
-		outiface => "$iface",
-	}	
-	firewall { "007 ipv6 accept inbound from $ipv6_address":
-		provider => 'ip6tables',
-		chain => 'INPUT',
-		proto => 'all',
-		action => 'accept',
-		source => "$ipv6_address",
-		iniface => "$iface",
+    firewall { "007 ipv4 accept inbound from ${ipv4_address}":
+        provider => 'iptables',
+        chain    => 'INPUT',
+        proto    => 'all',
+        action   => 'accept',
+        source   => $ipv4_address,
+        iniface  => $iface,
+    }
+
+    firewall { "007 ipv6 accept outbound to ${ipv6_address}":
+        provider    => 'ip6tables',
+        chain       => 'OUTPUT',
+        proto       => 'all',
+        action      => 'accept',
+        destination => $ipv6_address,
+        outiface    => $iface,
+    }
+
+    firewall { "007 ipv6 accept inbound from ${ipv6_address}":
+        provider => 'ip6tables',
+        chain    => 'INPUT',
+        proto    => 'all',
+        action   => 'accept',
+        source   => $ipv6_address,
+        iniface  => $iface,
     }
 }

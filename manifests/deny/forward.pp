@@ -23,11 +23,11 @@ define packetfilter::deny::forward
     # This can be at the beginning of the chain because it's just a selective
     # block. More overreaching blocks should be at the very end.
     firewall { "004 ipv4 deny forward from ${source} to ${destination}":
-        provider => 'iptables',
-        chain  => 'FORWARD',
-        proto => 'all',
-        action => 'drop',
-        source => $source,
+        provider    => 'iptables',
+        chain       => 'FORWARD',
+        proto       => 'all',
+        action      => 'drop',
+        source      => $source,
         destination => $destination,
     }
 }

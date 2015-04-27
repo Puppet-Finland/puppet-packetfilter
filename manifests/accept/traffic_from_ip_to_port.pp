@@ -7,14 +7,14 @@
 #
 # [*iface*]
 #   The interface the rule applies to
+# [*dport*]
+#   Allow traffic to this local port/port range
 # [*ipv4_address*]
 #   Allow traffic from this IPv4 address
 # [*ipv6_address*]
 #   Allow traffic from this IPv6 address
 # [*proto*]
 #   Allow only this protocol type (defaults to 'all')
-# [*dport*]
-#   Allow traffic to this local port/port range
 #
 # == Examples
 #
@@ -30,31 +30,34 @@
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
 #
-define packetfilter::accept::traffic_from_ip_to_port(
+# Samuli Seppänen <samuli@openvpn.net>
+#
+define packetfilter::accept::traffic_from_ip_to_port
+(
     $iface,
+    $dport,
     $ipv4_address,
     $ipv6_address,
-    $proto='all',
-    $dport
+    $proto='all'
 )
 {
-    firewall { "007 ipv4 accept inbound from $ipv4_address to port $dport":
+    firewall { "007 ipv4 accept inbound from ${ipv4_address} to port ${dport}":
         provider => 'iptables',
-        chain => 'INPUT',
-        proto => "$proto",
-        action => 'accept',
-        source => "$ipv4_address",
-        dport => "$dport",
-        iniface => "$iface",
+        chain    => 'INPUT',
+        proto    => $proto,
+        action   => 'accept',
+        source   => $ipv4_address,
+        dport    => $dport,
+        iniface  => $iface,
     }
 
-    firewall { "007 ipv6 accept inbound from $ipv6_address to port $dport":
+    firewall { "007 ipv6 accept inbound from ${ipv6_address} to port ${dport}":
         provider => 'ip6tables',
-        chain => 'INPUT',
-        proto => "$proto",
-        action => 'accept',
-        source => "$ipv6_address",
-        dport => "$dport",
-        iniface => "$iface",
+        chain    => 'INPUT',
+        proto    => $proto,
+        action   => 'accept',
+        source   => $ipv6_address,
+        dport    => $dport,
+        iniface  => $iface,
     }
 }

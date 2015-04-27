@@ -15,44 +15,44 @@ class packetfilter::router
     $outiface
 )
 {
-    include packetfilter::endpoint
+    include ::packetfilter::endpoint
 
     # Masquerade rules
     firewall { "101 ipv4 masquerade ${outiface}":
         provider => 'iptables',
-        chain => 'POSTROUTING',
-        proto => 'all',
+        chain    => 'POSTROUTING',
+        proto    => 'all',
         outiface => $outiface,
-        source => $source,
-        table => 'nat',
-        jump => 'MASQUERADE',
+        source   => $source,
+        table    => 'nat',
+        jump     => 'MASQUERADE',
     }
 
     # INPUT chain
     firewall { "102 ipv4 accept ${iniface}":
         provider => 'iptables',
-        chain => 'INPUT',
-        proto => 'all',
-        state => [ 'NEW' ],
-        iniface => $iniface,
-        action => 'accept',
+        chain    => 'INPUT',
+        proto    => 'all',
+        state    => [ 'NEW' ],
+        iniface  => $iniface,
+        action   => 'accept',
     }
 
     # FORWARD chain
     firewall { "102 ipv4 forward ${iniface}":
         provider => 'iptables',
-        chain => 'FORWARD',
-        proto => 'all',
-        state => [ 'NEW' ],
-        iniface => $iniface,
-        action => 'accept',
+        chain    => 'FORWARD',
+        proto    => 'all',
+        state    => [ 'NEW' ],
+        iniface  => $iniface,
+        action   => 'accept',
     }
 
     firewall { '104 ipv4 forward related and established':
         provider => 'iptables',
-        chain => 'FORWARD',
-        proto => 'all',
-        state => [ 'ESTABLISHED', 'RELATED' ],
-        action => 'accept',
+        chain    => 'FORWARD',
+        proto    => 'all',
+        state    => [ 'ESTABLISHED', 'RELATED' ],
+        action   => 'accept',
     }
 }

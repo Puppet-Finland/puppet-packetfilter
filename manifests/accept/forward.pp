@@ -16,7 +16,7 @@
 #
 # == Examples
 #
-#   class { 'packetfilter::accept::forward':
+#   define { 'packetfilter::accept::forward':
 #       source => '192.168.40.8',
 #       destination => '10.10.122.95',
 #       proto => 'udp',
@@ -31,32 +31,24 @@ define packetfilter::accept::forward
 (
     $source,
     $destination,
-    $proto='',
-    $dport=''
+    $proto=undef,
+    $dport=undef
 )
 {
-    # No port/protocol information -> accept based on IP/IP-range
-    if ( $proto == '' ) or ( $dport == '' ) {
-        firewall { "001 ipv4 accept forward from ${source} to ${destination}":
-            provider => 'iptables',
-            chain  => 'FORWARD',
-            proto => 'all',
-            action => 'accept',
-            source => "$source",
-            destination => "$destination",
-        }
+
+    # If $proto is not defined, allow any protocol
+    $protocol = $proto ? {
+        undef   => 'all',
+        default => $proto,
     }
-    else
-    {
-        # Port and protocol given, use more granular filters
-        firewall { "001 ipv4 accept forward ${proto} from ${source} to ${destination}:${dport}":
-            provider => 'iptables',
-            chain  => 'FORWARD',
-            action => 'accept',
-            source => "$source",
-            destination => "$destination",
-            dport => "$dport",
-            proto => "$proto",
-        }
+
+    firewall { "001 ipv4 accept forward ${protocol} from ${source} to ${destination}:${dport}":
+        provider    => 'iptables',
+        chain       => 'FORWARD',
+        action      => 'accept',
+        source      => $source,
+        destination => $destination,
+        dport       => $dport,
+        proto       => $protocol,
     }
 }

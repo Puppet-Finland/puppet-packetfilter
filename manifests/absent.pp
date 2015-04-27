@@ -10,7 +10,7 @@ class packetfilter::absent {
     # away with the slightly more hacky local implementation based on the rclocal 
     # module.
     file { 'packetfilter-packetfilter':
-            name => '/etc/rc.local.d/packetfilter',
             ensure => absent,
+            name   => '/etc/rc.local.d/packetfilter',
     }
 }

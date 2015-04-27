@@ -4,6 +4,14 @@
 # Common packet filtering configurations for any host that has a puppet-managed 
 # firewall.
 #
+# Other Puppet-Finland modules include per-daemon packet filtering rules, but 
+# realize them only if this class, or any of its subclasses, is included on the 
+# node.
+#
+# == Parameters
+#
+# None at the moment
+#
 # == Authors
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
@@ -18,18 +26,14 @@
 #
 class packetfilter {
 
-# Rationale for this is explained in init.pp of the sshd module
-if hiera('manage_packetfilter', 'true') != 'false' {
-
     # Define packetfilter stages: The initial rules are set in pre-stage,
     # before all normal rules. Rules belonging to the end are set in post-stage.
     stage {'packetfilter-pre':  before  => Stage['main'] }
     stage {'packetfilter-post': require => Stage['main'] }
 
     # Install the required packages
-    include packetfilter::install
+    include ::packetfilter::install
 
     # Remove obsolete configurations
-    include packetfilter::absent
-}
+    include ::packetfilter::absent
 }
