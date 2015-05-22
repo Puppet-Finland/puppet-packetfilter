@@ -34,6 +34,9 @@ class packetfilter {
     # Install the required packages
     include ::packetfilter::install
 
+    # Enable iptables/ip6tables services
+    include ::packetfilter::service
+
     # Remove obsolete configurations
     include ::packetfilter::absent
 }
