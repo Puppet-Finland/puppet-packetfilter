@@ -12,8 +12,9 @@ class packetfilter::params {
     case $::osfamily {
         'RedHat': {
             $required_packages = $::operatingsystemmajrelease ? {
-                6 => ['iptables', 'iptables-ipv6'],
-                7 => ['iptables-services'],
+                6  => ['iptables', 'iptables-ipv6'],
+                7  => ['iptables-services'],
+                21 => ['iptables-services'],
             }
         }
         'Debian': {
