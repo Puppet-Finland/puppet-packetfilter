@@ -11,18 +11,10 @@ class packetfilter::params {
 
     case $::osfamily {
         'RedHat': {
-            $required_packages = $::operatingsystemmajrelease ? {
-                6  => ['iptables', 'iptables-ipv6'],
-                7  => ['iptables-services'],
-                21 => ['iptables-services'],
-            }
+            # Nothing here at the moment
         }
         'Debian': {
-            $required_packages = ['iptables-persistent']
-            $service_name = $::lsbdistcodename ? {
-                'jessie' => 'netfilter-persistent',
-                default  => 'iptables-persistent',
-            }
+            # Nothing here at the moment
         }
         default: {
             fail("Unsupported OS: ${::osfamily}")

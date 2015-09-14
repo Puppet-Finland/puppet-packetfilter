@@ -8,7 +8,7 @@
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
 #
-class packetfilter::accept::inbound($stage = 'packetfilter-pre') {
+class packetfilter::accept::inbound() {
 
     # IPv4 iptables rules
     firewall { '000 ipv4 accept related and established':
@@ -30,7 +30,7 @@ class packetfilter::accept::inbound($stage = 'packetfilter-pre') {
         provider => 'iptables',
         chain    => 'INPUT',
         proto    => 'tcp',
-        port     => 22,
+        dport    => 22,
         limit    => '3/min',
         action   => 'accept',
     }
@@ -74,7 +74,7 @@ class packetfilter::accept::inbound($stage = 'packetfilter-pre') {
         provider => 'ip6tables',
         chain    => 'INPUT',
         proto    => 'tcp',
-        port     => 22,
+        dport    => 22,
         # 'limit' not supported for ipv6
         #limit => '3/min',
         action   => 'accept',

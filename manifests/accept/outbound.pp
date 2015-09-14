@@ -7,7 +7,7 @@
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
 #
-class packetfilter::accept::outbound($stage = 'packetfilter-pre') {
+class packetfilter::accept::outbound() {
 
     firewall { '004 ipv4 accept outbound':
         provider => 'iptables',
