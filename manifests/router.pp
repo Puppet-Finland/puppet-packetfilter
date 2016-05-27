@@ -4,6 +4,9 @@
 # Typical set of rules for simplistic router nodes. Allows only limited inbound 
 # traffic without placing restrictions on outbound traffic.
 #
+# Note that you will need to set net.ipv4.ip_forward=1 in order for this class 
+# to do any good.
+#
 # == Authors
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
