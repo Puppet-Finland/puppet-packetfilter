@@ -2,10 +2,9 @@
 # == Class: packetfilter::router
 #
 # Typical set of rules for simplistic router nodes. Allows only limited inbound 
-# traffic without placing restrictions on outbound traffic.
-#
-# Note that you will need to set net.ipv4.ip_forward=1 in order for this class 
-# to do any good.
+# traffic without placing restrictions on outbound traffic. This also sets the 
+# net.ipv4.ip_forward sysctl parameter to 1; without that change this class 
+# would not do much good.
 #
 # == Authors
 #
@@ -19,6 +18,8 @@ class packetfilter::router
 )
 {
     include ::packetfilter::endpoint
+
+    sysctl::value { 'net.ipv4.ip_forward': value => '1' }
 
     # Masquerade rules
     firewall { "101 ipv4 masquerade ${outiface}":

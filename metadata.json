@@ -6,5 +6,7 @@
   "summary": "Setup packetfilter",
   "source": "https://github.com/Puppet-Finland/packetfilter.git",
   "project_page": "https://github.com/Puppet-Finland/packetfilter",
-  "dependencies": [ ]
+  "dependencies": [
+    { "name": "duritong/sysctl", "version_requirement": ">= 0.0.6" }
+  ]
 }
