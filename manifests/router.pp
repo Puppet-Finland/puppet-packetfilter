@@ -19,7 +19,7 @@ class packetfilter::router
 {
     include ::packetfilter::endpoint
 
-    sysctl::value { 'net.ipv4.ip_forward': value => '1' }
+    ensure_resource('sysctl::value', 'net.ipv4.ip_forward', { 'value' => 1 })
 
     # Masquerade rules
     firewall { "101 ipv4 masquerade ${outiface}":
