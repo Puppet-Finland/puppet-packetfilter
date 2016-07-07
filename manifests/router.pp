@@ -33,7 +33,7 @@ class packetfilter::router
     }
 
     # INPUT chain
-    firewall { "102 ipv4 accept ${iniface}":
+    firewall { '102 ipv4 accept masquerade iniface':
         provider => 'iptables',
         chain    => 'INPUT',
         proto    => 'all',
@@ -43,7 +43,7 @@ class packetfilter::router
     }
 
     # FORWARD chain
-    firewall { "102 ipv4 forward ${iniface}":
+    firewall { '102 ipv4 forward masquerade iniface':
         provider => 'iptables',
         chain    => 'FORWARD',
         proto    => 'all',
