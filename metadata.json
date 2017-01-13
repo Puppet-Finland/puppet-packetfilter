@@ -1,12 +1,13 @@
 {
   "name": "puppetfinland-packetfilter",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "author": "Puppet-Finland team",
   "license": "BSD license",
   "summary": "Setup packetfilter",
   "source": "https://github.com/Puppet-Finland/packetfilter.git",
   "project_page": "https://github.com/Puppet-Finland/packetfilter",
   "dependencies": [
-    { "name": "duritong/sysctl", "version_requirement": ">= 0.0.6" }
+    { "name": "duritong/sysctl", "version_requirement": ">= 0.0.6" },
+    { "name": "puppetlabs/firewall", "version_requirement": ">= 1.8.0" }
   ]
 }

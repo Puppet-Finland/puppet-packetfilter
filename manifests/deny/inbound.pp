@@ -7,19 +7,15 @@
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
 #
-class packetfilter::deny::inbound ($stage='packetfilter-post') {
+class packetfilter::deny::inbound () {
 
-  firewall { '999 ipv4 drop all other requests':
-    provider => 'iptables',
-    chain    => 'INPUT',
-    proto    => 'all',
-    action   => 'drop',
-  }
+    firewallchain { 'INPUT:filter:IPv4':
+        policy => 'drop',
+        purge  => true,
+    }
 
-  firewall { '999 ipv6 drop all other requests':
-    provider => 'ip6tables',
-    chain    => 'INPUT',
-    proto    => 'all',
-    action   => 'drop',
-  }
+    firewallchain { 'INPUT:filter:IPv6':
+        policy => 'drop',
+        purge  => true,
+    }
 }

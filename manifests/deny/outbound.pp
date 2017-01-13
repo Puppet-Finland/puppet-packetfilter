@@ -15,8 +15,7 @@
 #
 define packetfilter::deny::outbound
 (
-    $iface,
-    $stage='packetfilter-post'
+    $iface
 )
 {
     firewall { "999 ipv4 deny outbound to ${iface}":

@@ -27,8 +27,6 @@
 #
 class packetfilter {
 
-    stage {'packetfilter-post': require => Stage['main'] }
-
     # Basic setup by puppetlabs/packetfilter
     include ::firewall
 

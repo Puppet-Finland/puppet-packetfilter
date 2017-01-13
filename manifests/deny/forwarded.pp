@@ -13,19 +13,15 @@
 #
 # Samuli Seppänen <samuli@openvpn.net>
 #
-class packetfilter::deny::forwarded($stage='packetfilter-post') {
+class packetfilter::deny::forwarded() {
 
-    firewall { '999 ipv4 deny all other requests':
-        provider => 'iptables',
-        chain    => 'FORWARD',
-        proto    => 'all',
-        action   => 'drop',
+    firewallchain { 'FORWARD:filter:IPv4':
+        policy => 'drop',
+        purge  => true,
     }
 
-    firewall { '999 ipv6 deny all other requests':
-        provider => 'ip6tables',
-        chain    => 'FORWARD',
-        proto    => 'all',
-        action   => 'drop',
+    firewallchain { 'FORWARD:filter:IPv6':
+        policy => 'drop',
+        purge  => true,
     }
 }
