@@ -10,10 +10,38 @@
 #
 # Samuli Seppänen <samuli.seppanen@gmail.com>
 #
-class packetfilter::endpoint {
-
+class packetfilter::endpoint
+(
+    Enum['accept', 'drop'] $input_policy = 'drop',
+    Enum['accept', 'drop'] $forward_policy = 'drop',
+    Enum['accept', 'drop'] $output_policy = 'accept',
+    Boolean                $purge_unmanaged = true
+)
+{
     include ::packetfilter
     include ::packetfilter::accept::inbound
-    include ::packetfilter::deny::inbound
-    include ::packetfilter::deny::forwarded
+
+    # Set policies for the firewall chains
+    Firewallchain {
+        purge => $purge_unmanaged,
+    }
+
+    firewallchain { 'INPUT:filter:IPv4':
+        policy => $input_policy,
+    }
+    firewallchain { 'INPUT:filter:IPv6':
+        policy => $input_policy,
+    }
+    firewallchain { 'FORWARD:filter:IPv4':
+        policy => $forward_policy,
+    }
+    firewallchain { 'FORWARD:filter:IPv6':
+        policy => $forward_policy,
+    }
+    firewallchain { 'OUTPUT:filter:IPv4':
+        policy => $output_policy,
+    }
+    firewallchain { 'OUTPUT:filter:IPv6':
+        policy => $output_policy,
+    }
 }

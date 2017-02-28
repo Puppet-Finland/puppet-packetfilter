@@ -17,8 +17,6 @@ class packetfilter::router
     $outiface
 )
 {
-    include ::packetfilter::endpoint
-
     ensure_resource('sysctl::value', 'net.ipv4.ip_forward', { 'value' => 1 })
 
     # Masquerade rules
