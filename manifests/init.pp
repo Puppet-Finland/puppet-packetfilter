@@ -32,4 +32,7 @@ class packetfilter {
 
     # Remove obsolete configurations
     include ::packetfilter::absent
+
+    # Collect packet filter rules from other modules
+    Firewall <| tag == 'default' |>
 }
