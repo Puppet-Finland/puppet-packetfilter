@@ -79,6 +79,15 @@ class packetfilter::endpoint
         action   => 'accept',
     }
 
+    # This is required for DHCPv6
+    firewall { '001 ipv6 accept DHCPv6 responses':
+        provider => 'ip6tables',
+        chain    => 'INPUT',
+        proto    => 'udp',
+        port     => 546,
+        action   => 'accept',
+    }
+
     firewall { '002 ipv6 accept ssh':
         provider => 'ip6tables',
         chain    => 'INPUT',
