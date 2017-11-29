@@ -52,9 +52,9 @@ See [metadata.json](metadata.json).
 
 This module has been tested on
 
-* Ubuntu 12.04 and 14.04
-* Debian 7 and 8
-* CentOS 6 and 7
+* Ubuntu 12.04, 14.04 and 16.04
+* Debian 7-9
+* CentOS 6-7
 
 Any Linux-based operating system should work with minor modifications.
 
