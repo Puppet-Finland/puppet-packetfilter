@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Puppet-Finland/puppet-packetfilter.svg?branch=master)](https://travis-ci.org/Puppet-Finland/puppet-packetfilter)
+
 # packetfilter
 
 A general-purpose packetfilter module for Puppet. Uses Puppet Labs firewall for
