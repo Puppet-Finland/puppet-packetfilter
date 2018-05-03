@@ -14,7 +14,7 @@ server or desktop:
 
 To create a simple masquerading router:
 
-    class { '::packetfilter::endpoint':
+    class { '::packetfilter::router':
       source   => '192.168.0.50/24',
       iniface  => 'br0',
       outiface => 'eth0',
