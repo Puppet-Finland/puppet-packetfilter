@@ -3,6 +3,30 @@
 A general-purpose packetfilter module for Puppet. Uses Puppet Labs firewall for
 the hard lifting. Supports both IPv4 (iptables) and IPv6 (ip6tables).
 
+# Module usage
+
+To get a basic set of rules suitable for a traffic endpoint such as normal
+server or desktop:
+
+    include ::packetfilter::endpoint
+
+To create a simple masquerading router:
+
+    class { '::packetfilter::endpoint':
+      source   => '192.168.0.50/24',
+      iniface  => 'br0',
+      outiface => 'eth0',
+    }
+
+Other modules can add their own firewall resources: the ::packetfilter class
+will realize all virtual firewall resources tagged with 'default'. This feature
+is quite useful when used within Puppet modules that manage a network-facing
+daemon (e.g. snmpd, apache2, ssh): the daemon module can open up holes into the
+firewall as needed. For a typical example see
+[::postfix::packetfilter](https://github.com/Puppet-Finland/postfix/blob/master/manifests/packetfilter.pp).
+
+# Historical note on run stages
+
 Previously this module added blanket DENY rules to INPUT and FORWARD chains.
 This was achieved with a separate run stage which came after the main stage. In
 Puppet 3 this was a "belt-and-suspenders" approach in that prepending the
@@ -28,34 +52,10 @@ the ACCEPT rules in packetfilter module get applied first, and only after that
 the policy is set to DROP in the INPUT and FORWARD chains. Then other modules
 can apply their ACCEPT rules in whatever order they want.
 
+All this said, puppetlabs-firewall has an interesting property: even though
+Puppet debug log clearly shows the rules being applied in run-time order,
+the actual order of the rules will end up being based on the title. So all the
+refactoring discussed about was probably unnecessary. 
+
 Many of the subclasses could probably be merged if parameters and their default
 values were chosen carefully.
-
-# Module usage
-
-Typical usage on a leaf node from Hiera:
-
-    classes:
-        - packetfilter::endpoint
-
-For details, see
-
-* [Class: packetfilter](manifests/init.pp)
-* [Class: packetfilter::endpoint](manifests/endpoint.pp)
-* [Class: packetfilter::router](manifests/router.pp)
-
-# Dependencies
-
-See [metadata.json](metadata.json).
-
-# Operating system support
-
-This module has been tested on
-
-* Ubuntu 12.04, 14.04 and 16.04
-* Debian 7-9
-* CentOS 6-7
-
-Any Linux-based operating system should work with minor modifications.
-
-For details see [params.pp](manifests/params.pp).
