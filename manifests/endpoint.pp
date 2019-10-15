@@ -9,10 +9,11 @@
 #
 class packetfilter::endpoint
 (
-    Enum['accept', 'drop'] $input_policy = 'drop',
-    Enum['accept', 'drop'] $forward_policy = 'drop',
-    Enum['accept', 'drop'] $output_policy = 'accept',
-    Boolean                $purge_unmanaged = true
+    Enum['accept', 'drop']  $input_policy = 'drop',
+    Enum['accept', 'drop']  $forward_policy = 'drop',
+    Enum['accept', 'drop']  $output_policy = 'accept',
+    Optional[Array[String]] $unthrottled_networks = undef,
+    Boolean                 $purge_unmanaged = true
 )
 {
     # This class includes puppetlabs/firewall and collects virtual Firewall 
@@ -34,6 +35,18 @@ class packetfilter::endpoint
         chain    => 'INPUT',
         proto    => 'icmp',
         action   => 'accept',
+    }
+
+    # Disable SSH rate limiting on presumed-to-be-safe networks
+    if $unthrottled_networks {
+        firewall { '001 ipv4 accept unthrottled ssh':
+            provider => 'iptables',
+            source   => $unthrottled_networks,
+            chain    => 'INPUT',
+            proto    => 'tcp',
+            dport    => 22,
+            action   => 'accept',
+        }
     }
 
     firewall { '002 ipv4 accept ssh':
