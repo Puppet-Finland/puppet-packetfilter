@@ -12,6 +12,7 @@ class packetfilter::endpoint
     Enum['accept', 'drop']  $input_policy = 'drop',
     Enum['accept', 'drop']  $forward_policy = 'drop',
     Enum['accept', 'drop']  $output_policy = 'accept',
+    Boolean                 $manage_ssh_rules = true,
     Optional[Array[String]] $unthrottled_networks = undef,
     Boolean                 $purge_unmanaged = true
 )
@@ -37,25 +38,27 @@ class packetfilter::endpoint
         action   => 'accept',
     }
 
-    # Disable SSH rate limiting on presumed-to-be-safe networks
-    if $unthrottled_networks {
-        firewall { '001 ipv4 accept unthrottled ssh':
+    if $manage_ssh_rules {
+        # Disable SSH rate limiting on presumed-to-be-safe networks
+        if $unthrottled_networks {
+            firewall { '001 ipv4 accept unthrottled ssh':
+                provider => 'iptables',
+                source   => $unthrottled_networks,
+                chain    => 'INPUT',
+                proto    => 'tcp',
+                dport    => 22,
+                action   => 'accept',
+            }
+        }
+
+        firewall { '002 ipv4 accept ssh':
             provider => 'iptables',
-            source   => $unthrottled_networks,
             chain    => 'INPUT',
             proto    => 'tcp',
             dport    => 22,
+            limit    => '3/min',
             action   => 'accept',
         }
-    }
-
-    firewall { '002 ipv4 accept ssh':
-        provider => 'iptables',
-        chain    => 'INPUT',
-        proto    => 'tcp',
-        dport    => 22,
-        limit    => '3/min',
-        action   => 'accept',
     }
 
     firewall { '003 ipv4 accept loopback':
