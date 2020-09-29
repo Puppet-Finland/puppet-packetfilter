@@ -100,7 +100,7 @@ class packetfilter::endpoint
         provider => 'ip6tables',
         chain    => 'INPUT',
         proto    => 'udp',
-        port     => 546,
+        dport    => 546,
         action   => 'accept',
     }
 
