@@ -59,6 +59,16 @@ class packetfilter::endpoint
             limit    => '3/min',
             action   => 'accept',
         }
+
+        firewall { '002 ipv6 accept ssh':
+            provider => 'ip6tables',
+            chain    => 'INPUT',
+            proto    => 'tcp',
+            dport    => 22,
+            # 'limit' not supported for ipv6
+            #limit => '3/min',
+            action   => 'accept',
+        }
     }
 
     firewall { '003 ipv4 accept loopback':
@@ -101,16 +111,6 @@ class packetfilter::endpoint
         chain    => 'INPUT',
         proto    => 'udp',
         dport    => 546,
-        action   => 'accept',
-    }
-
-    firewall { '002 ipv6 accept ssh':
-        provider => 'ip6tables',
-        chain    => 'INPUT',
-        proto    => 'tcp',
-        dport    => 22,
-        # 'limit' not supported for ipv6
-        #limit => '3/min',
         action   => 'accept',
     }
 
