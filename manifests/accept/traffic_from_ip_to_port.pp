@@ -42,20 +42,20 @@ define packetfilter::accept::traffic_from_ip_to_port
 )
 {
     firewall { "007 ipv4 accept inbound from ${ipv4_address} to port ${dport}":
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'INPUT',
         proto    => $proto,
-        action   => 'accept',
+        jump     => 'accept',
         source   => $ipv4_address,
         dport    => $dport,
         iniface  => $iface,
     }
 
     firewall { "007 ipv6 accept inbound from ${ipv6_address} to port ${dport}":
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'INPUT',
         proto    => $proto,
-        action   => 'accept',
+        jump     => 'accept',
         source   => $ipv6_address,
         dport    => $dport,
         iniface  => $iface,

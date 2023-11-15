@@ -20,10 +20,10 @@ define packetfilter::deny::input(
 )
 {
     firewall { "004 ipv4 deny input from ${source} to ${destination}":
-        provider    => 'iptables',
+        protocol    => 'iptables',
         chain       => 'INPUT',
         proto       => 'all',
-        action      => 'drop',
+        jump        => 'drop',
         source      => $source,
         destination => $destination,
     }

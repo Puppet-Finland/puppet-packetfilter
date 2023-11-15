@@ -24,102 +24,102 @@ class packetfilter::endpoint
     # Configure a sane default set of (accept) rules
     # IPv4 iptables rules
     firewall { '000 ipv4 accept related and established':
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'INPUT',
         proto    => 'all',
         state    => [ 'ESTABLISHED', 'RELATED' ],
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     firewall { '001 ipv4 accept all icmp requests':
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'INPUT',
         proto    => 'icmp',
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     if $manage_ssh_rules {
         # Disable SSH rate limiting on presumed-to-be-safe networks
         if $unthrottled_networks {
             firewall { '001 ipv4 accept unthrottled ssh':
-                provider => 'iptables',
+                protocol => 'iptables',
                 source   => $unthrottled_networks,
                 chain    => 'INPUT',
                 proto    => 'tcp',
                 dport    => 22,
-                action   => 'accept',
+                jump     => 'accept',
             }
         }
 
         firewall { '002 ipv4 accept ssh':
-            provider => 'iptables',
+            protocol => 'iptables',
             chain    => 'INPUT',
             proto    => 'tcp',
             dport    => 22,
             limit    => '3/min',
-            action   => 'accept',
+            jump     => 'accept',
         }
 
         firewall { '002 ipv6 accept ssh':
-            provider => 'ip6tables',
+            protocol => 'ip6tables',
             chain    => 'INPUT',
             proto    => 'tcp',
             dport    => 22,
             # 'limit' not supported for ipv6
             #limit => '3/min',
-            action   => 'accept',
+            jump     => 'accept',
         }
     }
 
     firewall { '003 ipv4 accept loopback':
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'INPUT',
         proto    => 'all',
-        state    => [ 'NEW' ],
+        state    => 'NEW',
         iniface  => 'lo',
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     # IPv6 iptables rules
     firewall { '000 ipv6 accept related and established':
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'INPUT',
         proto    => 'all',
         state    => [ 'ESTABLISHED', 'RELATED' ],
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     # This is required for IPv6
     firewall { '001 ipv6 accept all icmp requests':
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'INPUT',
         proto    => 'icmp',
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     # This is required for IPv6
     firewall { '001 ipv6 accept all ipv6-icmp requests':
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'INPUT',
         proto    => 'ipv6-icmp',
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     # This is required for DHCPv6
     firewall { '001 ipv6 accept DHCPv6 responses':
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'INPUT',
         proto    => 'udp',
         dport    => 546,
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     firewall { '003 ipv6 accept loopback':
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'INPUT',
         proto    => 'all',
         iniface  => 'lo',
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     # Set policies for the firewall chains

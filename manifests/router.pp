@@ -21,7 +21,7 @@ class packetfilter::router
 
     # Masquerade rules
     firewall { "101 ipv4 masquerade ${outiface}":
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'POSTROUTING',
         proto    => 'all',
         outiface => $outiface,
@@ -32,29 +32,29 @@ class packetfilter::router
 
     # INPUT chain
     firewall { '102 ipv4 accept masquerade iniface':
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'INPUT',
         proto    => 'all',
-        state    => [ 'NEW' ],
+        state    => 'NEW',
         iniface  => $iniface,
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     # FORWARD chain
     firewall { '102 ipv4 forward masquerade iniface':
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'FORWARD',
         proto    => 'all',
-        state    => [ 'NEW' ],
+        state    => 'NEW',
         iniface  => $iniface,
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     firewall { '104 ipv4 forward related and established':
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'FORWARD',
         proto    => 'all',
         state    => [ 'ESTABLISHED', 'RELATED' ],
-        action   => 'accept',
+        jump     => 'accept',
     }
 }
