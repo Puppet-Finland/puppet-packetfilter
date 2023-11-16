@@ -30,37 +30,37 @@ define packetfilter::accept::traffic_to_ip(
 )
 {
     firewall { "007 ipv4 accept outbound to ${ipv4_address}":
-        provider    => 'iptables',
+        protocol    => 'iptables',
         chain       => 'OUTPUT',
         proto       => 'all',
-        action      => 'accept',
+        jump        => 'accept',
         destination => $ipv4_address,
         outiface    => $iface,
     }
 
     firewall { "007 ipv4 accept inbound from ${ipv4_address}":
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'INPUT',
         proto    => 'all',
-        action   => 'accept',
+        jump     => 'accept',
         source   => $ipv4_address,
         iniface  => $iface,
     }
 
     firewall { "007 ipv6 accept outbound to ${ipv6_address}":
-        provider    => 'ip6tables',
+        protocol    => 'ip6tables',
         chain       => 'OUTPUT',
         proto       => 'all',
-        action      => 'accept',
+        jump        => 'accept',
         destination => $ipv6_address,
         outiface    => $iface,
     }
 
     firewall { "007 ipv6 accept inbound from ${ipv6_address}":
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'INPUT',
         proto    => 'all',
-        action   => 'accept',
+        jump     => 'accept',
         source   => $ipv6_address,
         iniface  => $iface,
     }

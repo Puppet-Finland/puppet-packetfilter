@@ -10,16 +10,16 @@
 class packetfilter::accept::outbound() {
 
     firewall { '004 ipv4 accept outbound':
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'OUTPUT',
         proto    => 'all',
-        action   => 'accept',
+        jump     => 'accept',
     }
 
     firewall { '004 ipv6 accept outbound':
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'OUTPUT',
         proto    => 'all',
-        action   => 'accept',
+        jump     => 'accept',
     }
 }

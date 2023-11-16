@@ -43,9 +43,9 @@ define packetfilter::accept::forward
     }
 
     firewall { "001 ipv4 accept forward ${protocol} from ${source} to ${destination}:${dport}":
-        provider    => 'iptables',
+        protocol    => 'iptables',
         chain       => 'FORWARD',
-        action      => 'accept',
+        jump        => 'accept',
         source      => $source,
         destination => $destination,
         dport       => $dport,

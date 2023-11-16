@@ -19,18 +19,18 @@ define packetfilter::deny::outbound
 )
 {
     firewall { "99999 ipv4 deny outbound to ${iface}":
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'OUTPUT',
         proto    => 'all',
-        action   => 'drop',
+        jump     => 'drop',
         outiface => $iface,
     }
 
     firewall { "99999 ipv6 deny outbound to ${iface}":
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'OUTPUT',
         proto    => 'all',
-        action   => 'drop',
+        jump     => 'drop',
         outiface => $iface,
     }
 }

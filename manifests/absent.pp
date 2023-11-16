@@ -16,7 +16,7 @@ class packetfilter::absent {
 
     Firewall {
         ensure => 'absent',
-        action => 'drop',
+        jump   => 'drop',
         proto  => 'all',
     }
 
@@ -25,19 +25,19 @@ class packetfilter::absent {
     # other hand, have started causing various issues, such as dependency cycles 
     # and problems with iptables-save.
     firewall { '999 ipv4 drop all other requests':
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'INPUT',
     }
     firewall { '999 ipv6 drop all other requests':
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'INPUT',
     }
     firewall { '999 ipv4 deny all other requests':
-        provider => 'iptables',
+        protocol => 'iptables',
         chain    => 'FORWARD',
     }
     firewall { '999 ipv6 deny all other requests':
-        provider => 'ip6tables',
+        protocol => 'ip6tables',
         chain    => 'FORWARD',
     }
 }
