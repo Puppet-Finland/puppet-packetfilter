@@ -1,9 +1,9 @@
 #
 # == Class: packetfilter::endpoint
-# 
+#
 # Typical set of rules for endpoint nodes
 #
-# This class sets a sane default set of ACCEPT rules to prevent one from getting 
+# This class sets a sane default set of ACCEPT rules to prevent one from getting
 # locked out from a node, and sets the default policies for INPUT, FORWARD and
 # OUTPUT chains.
 #
@@ -17,7 +17,7 @@ class packetfilter::endpoint
     Boolean                 $purge_unmanaged = true
 )
 {
-    # This class includes puppetlabs/firewall and collects virtual Firewall 
+    # This class includes puppetlabs/firewall and collects virtual Firewall
     # resources from other classes
     include ::packetfilter
 
@@ -41,13 +41,15 @@ class packetfilter::endpoint
     if $manage_ssh_rules {
         # Disable SSH rate limiting on presumed-to-be-safe networks
         if $unthrottled_networks {
-            firewall { '001 ipv4 accept unthrottled ssh':
-                protocol => 'iptables',
-                source   => $unthrottled_networks,
-                chain    => 'INPUT',
-                proto    => 'tcp',
-                dport    => 22,
-                jump     => 'accept',
+            $unthrottled_networks.each |$nw| {
+                firewall { "001 ipv4 accept unthrottled ssh from $nw":
+                    protocol => 'iptables',
+                    source   => $nw,
+                    chain    => 'INPUT',
+                    proto    => 'tcp',
+                    dport    => 22,
+                    jump     => 'accept',
+                }
             }
         }
 
