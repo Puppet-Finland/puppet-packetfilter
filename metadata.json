@@ -1,6 +1,6 @@
 {
   "name": "puppetfinland-packetfilter",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": "Puppet-Finland team",
   "summary": "Setup basic iptables/ip6tables rules",
   "license": "BSD-2-Clause",
