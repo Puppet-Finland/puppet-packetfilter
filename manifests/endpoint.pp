@@ -42,7 +42,7 @@ class packetfilter::endpoint
         # Disable SSH rate limiting on presumed-to-be-safe networks
         if $unthrottled_networks {
             $unthrottled_networks.each |$nw| {
-                firewall { "001 ipv4 accept unthrottled ssh from $nw":
+                firewall { "001 ipv4 accept unthrottled ssh from ${nw}":
                     protocol => 'iptables',
                     source   => $nw,
                     chain    => 'INPUT',
